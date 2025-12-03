@@ -1,4 +1,4 @@
-import { Facebook, Instagram, Youtube } from "lucide-react";
+import { Facebook, Instagram, Youtube, Music2 } from "lucide-react";
 
 const Footer = () => {
   return (
@@ -19,6 +19,14 @@ const Footer = () => {
                 className="hover:opacity-60 transition-opacity"
               >
                 <Instagram className="w-5 h-5" strokeWidth={1.5} />
+              </a>
+              <a
+                href="https://www.tiktok.com/@diego.joyero925?_t=8iIxkY9zR4v&_r=1"
+                target="_blank"
+                rel="noreferrer"
+                className="hover:opacity-60 transition-opacity"
+              >
+                <Music2 className="w-5 h-5" strokeWidth={1.5} />
               </a>
               <a
                 href="https://www.facebook.com/people/Diego-Joyero/61551986008410/"
@@ -57,7 +65,7 @@ const Footer = () => {
           <div>
             <h5 className="text-xs font-display tracking-[0.15em] mb-4">INFO</h5>
             <ul className="space-y-3">
-              {["About Us", "Contact", "Shipping", "Returns", "Size Guide", "Care Instructions"].map((item) => (
+              {["Home", "Collections", "Featured", "Offer", "All Pieces", "Drop List"].map((item) => (
                 <li key={item}>
                   <a href="#" className="text-sm font-body text-muted-foreground hover:text-foreground transition-colors">
                     {item}
@@ -67,17 +75,42 @@ const Footer = () => {
             </ul>
           </div>
 
-          {/* Legal */}
+          {/* Contact */}
           <div>
-            <h5 className="text-xs font-display tracking-[0.15em] mb-4">LEGAL</h5>
+            <h5 className="text-xs font-display tracking-[0.15em] mb-4">CONTACT</h5>
             <ul className="space-y-3">
-              {["Privacy Policy", "Terms of Service", "Cookie Policy"].map((item) => (
-                <li key={item}>
-                  <a href="#" className="text-sm font-body text-muted-foreground hover:text-foreground transition-colors">
-                    {item}
-                  </a>
-                </li>
-              ))}
+              <li>
+                <a href="https://www.instagram.com/diego.joyero/" target="_blank" rel="noreferrer" className="text-sm font-body text-muted-foreground hover:text-foreground transition-colors">
+                  Instagram
+                </a>
+              </li>
+              <li>
+                <a
+                  href="https://www.tiktok.com/@diego.joyero925?_t=8iIxkY9zR4v&_r=1"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="flex items-center gap-2 text-sm font-body text-muted-foreground hover:text-foreground transition-colors"
+                >
+                  <Music2 className="w-4 h-4" strokeWidth={1.5} />
+                  TikTok
+                </a>
+              </li>
+              <li className="text-sm font-body text-muted-foreground">
+                <span className="uppercase font-display text-xs tracking-[0.15em] text-foreground block mb-1">
+                  Trabaja con nosotros:
+                </span>
+                <a href="mailto:partnersdiegojoyero@gmail.com" className="hover:text-foreground transition-colors">
+                  partnersdiegojoyero@gmail.com
+                </a>
+              </li>
+              <li className="text-sm font-body text-muted-foreground">
+                <span className="uppercase font-display text-xs tracking-[0.15em] text-foreground block mb-1">
+                  Dudas / reclamos:
+                </span>
+                <a href="mailto:clientesdiegojoyero@gmail.com" className="hover:text-foreground transition-colors">
+                  clientesdiegojoyero@gmail.com
+                </a>
+              </li>
             </ul>
           </div>
         </div>

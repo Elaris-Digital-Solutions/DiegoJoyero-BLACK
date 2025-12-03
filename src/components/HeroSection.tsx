@@ -62,17 +62,7 @@ const HeroSection = () => {
       </div>
 
       {/* Scroll Indicator */}
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 1, delay: 1.2 }}
-        className="absolute bottom-8 left-1/2 -translate-x-1/2 text-background"
-      >
-        <div className="flex flex-col items-center gap-2">
-          <span className="text-[10px] font-display tracking-[0.2em]">SCROLL</span>
-          <div className="w-px h-8 bg-background/50" />
-        </div>
-      </motion.div>
+      
     </section>
   );
 };

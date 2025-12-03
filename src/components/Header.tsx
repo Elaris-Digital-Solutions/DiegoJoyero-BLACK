@@ -1,4 +1,4 @@
-import { Search, User, ShoppingBag } from "lucide-react";
+import { ShoppingBag } from "lucide-react";
 import { useState } from "react";
 import CartDrawer from "./CartDrawer";
 
@@ -33,12 +33,6 @@ const Header = ({ cartItemCount, onCartClick }: HeaderProps) => {
 
           {/* Icons */}
           <div className="flex items-center gap-4 md:gap-6 w-32 justify-end">
-            <button className="p-1 hover:opacity-60 transition-opacity">
-              <Search className="w-5 h-5" strokeWidth={1.5} />
-            </button>
-            <button className="p-1 hover:opacity-60 transition-opacity hidden md:block">
-              <User className="w-5 h-5" strokeWidth={1.5} />
-            </button>
             <button
               onClick={onCartClick}
               className="p-1 hover:opacity-60 transition-opacity relative"
