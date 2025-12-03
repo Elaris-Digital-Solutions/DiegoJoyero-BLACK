@@ -67,7 +67,7 @@ const Footer = () => {
         {/* Bottom */}
         <div className="mt-12 pt-8 border-t border-border flex flex-col md:flex-row md:items-center md:justify-between gap-4">
           <p className="text-xs font-body text-muted-foreground">
-            © 2024 Designs by Maxx. All rights reserved.
+            © 2024 Diego Joyero. All rights reserved.
           </p>
           <div className="flex items-center gap-4">
             <select className="bg-transparent text-xs font-display uppercase tracking-wider cursor-pointer focus:outline-none text-muted-foreground">
