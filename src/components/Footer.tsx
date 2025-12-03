@@ -1,4 +1,4 @@
-import { Instagram, Twitter } from "lucide-react";
+import { Facebook, Instagram, Youtube } from "lucide-react";
 
 const Footer = () => {
   return (
@@ -12,11 +12,29 @@ const Footer = () => {
               Industrial jewelry for the modern individual. Crafted with intention.
             </p>
             <div className="mt-6 flex items-center gap-4">
-              <a href="#" className="hover:opacity-60 transition-opacity">
+              <a
+                href="https://www.instagram.com/diego.joyero/"
+                target="_blank"
+                rel="noreferrer"
+                className="hover:opacity-60 transition-opacity"
+              >
                 <Instagram className="w-5 h-5" strokeWidth={1.5} />
               </a>
-              <a href="#" className="hover:opacity-60 transition-opacity">
-                <Twitter className="w-5 h-5" strokeWidth={1.5} />
+              <a
+                href="https://www.facebook.com/people/Diego-Joyero/61551986008410/"
+                target="_blank"
+                rel="noreferrer"
+                className="hover:opacity-60 transition-opacity"
+              >
+                <Facebook className="w-5 h-5" strokeWidth={1.5} />
+              </a>
+              <a
+                href="https://www.youtube.com/@DiegoJoyero-m1n/videos"
+                target="_blank"
+                rel="noreferrer"
+                className="hover:opacity-60 transition-opacity"
+              >
+                <Youtube className="w-5 h-5" strokeWidth={1.5} />
               </a>
             </div>
           </div>
