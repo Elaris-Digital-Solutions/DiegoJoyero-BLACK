@@ -19,8 +19,7 @@ const Header = ({ cartItemCount, onCartClick }: HeaderProps) => {
             <select
               value={currency}
               onChange={(e) => setCurrency(e.target.value)}
-              className="bg-transparent text-xs font-display uppercase tracking-wider cursor-pointer focus:outline-none text-white"
-              style={{ color: '#000' }}
+              className="bg-transparent text-xs font-display uppercase tracking-wider cursor-pointer focus:outline-none text-foreground"
             >
               <option value="SOL" style={{ color: '#000' }}>SOL S/</option>
               <option value="USD" style={{ color: '#000' }}>USD $</option>

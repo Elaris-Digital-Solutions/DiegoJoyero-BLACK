@@ -90,14 +90,13 @@ const Footer = () => {
           <div className="flex items-center gap-4">
             <select
               defaultValue="SOL"
-              className="bg-transparent text-xs font-display uppercase tracking-wider cursor-pointer focus:outline-none text-black"
-              style={{ color: '#000' }}
+              className="bg-transparent text-xs font-display uppercase tracking-wider cursor-pointer focus:outline-none text-foreground"
             >
               <option value="SOL" style={{ color: '#000' }}>SOL S/</option>
               <option value="USD" style={{ color: '#000' }}>USD $</option>
             </select>
             <span className="text-muted-foreground">|</span>
-            <select className="bg-transparent text-xs font-display uppercase tracking-wider cursor-pointer focus:outline-none text-black" style={{ color: '#000' }}>
+            <select className="bg-transparent text-xs font-display uppercase tracking-wider cursor-pointer focus:outline-none text-foreground">
               <option style={{ color: '#000' }}>United States</option>
               <option style={{ color: '#000' }}>Peru</option>
             </select>
