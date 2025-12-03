@@ -88,14 +88,18 @@ const Footer = () => {
             © 2024 Diego Joyero. All rights reserved.
           </p>
           <div className="flex items-center gap-4">
-            <select className="bg-transparent text-xs font-display uppercase tracking-wider cursor-pointer focus:outline-none text-muted-foreground">
-              <option>USD $</option>
-              <option>PEN S/</option>
+            <select
+              defaultValue="SOL"
+              className="bg-transparent text-xs font-display uppercase tracking-wider cursor-pointer focus:outline-none text-black"
+              style={{ color: '#000' }}
+            >
+              <option value="SOL" style={{ color: '#000' }}>SOL S/</option>
+              <option value="USD" style={{ color: '#000' }}>USD $</option>
             </select>
             <span className="text-muted-foreground">|</span>
-            <select className="bg-transparent text-xs font-display uppercase tracking-wider cursor-pointer focus:outline-none text-muted-foreground">
-              <option>United States</option>
-              <option>Peru</option>
+            <select className="bg-transparent text-xs font-display uppercase tracking-wider cursor-pointer focus:outline-none text-black" style={{ color: '#000' }}>
+              <option style={{ color: '#000' }}>United States</option>
+              <option style={{ color: '#000' }}>Peru</option>
             </select>
           </div>
         </div>

@@ -8,7 +8,7 @@ interface HeaderProps {
 }
 
 const Header = ({ cartItemCount, onCartClick }: HeaderProps) => {
-  const [currency, setCurrency] = useState("USD");
+  const [currency, setCurrency] = useState("SOL");
 
   return (
     <header className="sticky top-0 z-40 bg-background border-b border-border">
@@ -19,17 +19,17 @@ const Header = ({ cartItemCount, onCartClick }: HeaderProps) => {
             <select
               value={currency}
               onChange={(e) => setCurrency(e.target.value)}
-              className="bg-transparent text-xs font-display uppercase tracking-wider cursor-pointer focus:outline-none"
+              className="bg-transparent text-xs font-display uppercase tracking-wider cursor-pointer focus:outline-none text-white"
+              style={{ color: '#000' }}
             >
-              <option value="USD">USD $</option>
-              <option value="EUR">EUR €</option>
-              <option value="GBP">GBP £</option>
+              <option value="SOL" style={{ color: '#000' }}>SOL S/</option>
+              <option value="USD" style={{ color: '#000' }}>USD $</option>
             </select>
           </div>
 
           {/* Logo */}
           <a href="/" className="absolute left-1/2 -translate-x-1/2 md:static md:translate-x-0 md:flex-1 md:flex md:justify-center">
-            <img src="/logo.png" alt="Designs by Maxx" className="h-8 md:h-10 object-contain" />
+            <img src="/logo.png" alt="Diego Joyero" className="h-8 md:h-10 object-contain" />
           </a>
 
           {/* Icons */}
