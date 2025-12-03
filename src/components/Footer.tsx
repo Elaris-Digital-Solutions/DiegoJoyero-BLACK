@@ -7,7 +7,7 @@ const Footer = () => {
         <div className="grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-12">
           {/* Brand */}
           <div className="col-span-2 md:col-span-1">
-            <img src="/logo.png" alt="Designs by Maxx" className="h-8 object-contain" />
+            <img src="/logo.png" alt="Diego Joyero" className="h-8 object-contain" />
             <p className="mt-4 text-sm font-body text-muted-foreground leading-relaxed">
               Industrial jewelry for the modern individual. Crafted with intention.
             </p>
@@ -72,14 +72,12 @@ const Footer = () => {
           <div className="flex items-center gap-4">
             <select className="bg-transparent text-xs font-display uppercase tracking-wider cursor-pointer focus:outline-none text-muted-foreground">
               <option>USD $</option>
-              <option>EUR €</option>
-              <option>GBP £</option>
+              <option>PEN S/</option>
             </select>
             <span className="text-muted-foreground">|</span>
             <select className="bg-transparent text-xs font-display uppercase tracking-wider cursor-pointer focus:outline-none text-muted-foreground">
               <option>United States</option>
-              <option>United Kingdom</option>
-              <option>Europe</option>
+              <option>Peru</option>
             </select>
           </div>
         </div>

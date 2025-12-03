@@ -87,10 +87,10 @@ const AllProducts = ({ onAddToCart }: AllProductsProps) => {
           </div>
           <div className="mt-4 md:mt-0 flex items-center gap-4">
             <select className="bg-transparent text-xs font-display uppercase tracking-wider cursor-pointer focus:outline-none border-b border-foreground pb-1">
-              <option>Sort by: Featured</option>
-              <option>Price: Low to High</option>
-              <option>Price: High to Low</option>
-              <option>Newest</option>
+              <option style={{ color: "#000" }}>Sort by: Featured</option>
+              <option style={{ color: "#000" }}>Price: Low to High</option>
+              <option style={{ color: "#000" }}>Price: High to Low</option>
+              <option style={{ color: "#000" }}>Newest</option>
             </select>
           </div>
         </motion.div>
