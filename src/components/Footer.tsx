@@ -118,7 +118,15 @@ const Footer = () => {
         {/* Bottom */}
         <div className="mt-12 pt-8 border-t border-border flex flex-col md:flex-row md:items-center md:justify-between gap-4">
           <p className="text-xs font-body text-muted-foreground">
-            © 2024 Diego Joyero. All rights reserved.
+            © 2024 Diego Joyero. All rights reserved. {" "}
+            <a
+              href="https://www.instagram.com/elarisdigitalsolutions/"
+              target="_blank"
+              rel="noreferrer"
+              className="underline decoration-muted-foreground decoration-[1px] underline-offset-4 hover:text-foreground transition-colors"
+            >
+              Desarrollado por Elaris Digital Solutions.
+            </a>
           </p>
           <div className="flex items-center gap-4">
             <select
