@@ -10,30 +10,24 @@ import PromoBanner from "@/components/PromoBanner";
 import AllProducts from "@/components/AllProducts";
 import Newsletter from "@/components/Newsletter";
 import Footer from "@/components/Footer";
-import CartDrawer, { CartItem } from "@/components/CartDrawer";
+import CartDrawer from "@/components/CartDrawer";
 import { Product } from "@/components/ProductCard";
 import ProductDetailModal, { ProductDetail } from "@/components/ProductDetailModal";
+import { useCart } from "@/contexts/CartContext";
 
 const Index = () => {
-  const [cartItems, setCartItems] = useState<CartItem[]>([]);
-  const [isCartOpen, setIsCartOpen] = useState(false);
+  const { addItem } = useCart();
   const [selectedProduct, setSelectedProduct] = useState<ProductDetail | null>(null);
   const [isDetailOpen, setIsDetailOpen] = useState(false);
 
   const handleAddToCart = useCallback((product: Product) => {
-    setCartItems((prev) => {
-      const existingItem = prev.find((item) => item.id === product.id);
-      if (existingItem) {
-        toast.success(`Added another ${product.name} to cart`);
-        return prev.map((item) =>
-          item.id === product.id ? { ...item, quantity: item.quantity + 1 } : item
-        );
-      }
-      toast.success(`${product.name} added to cart`);
-      return [...prev, { ...product, quantity: 1 }];
+    addItem({
+      id: product.id,
+      name: product.name,
+      price: product.price,
+      image: product.image,
     });
-    setIsCartOpen(true);
-  }, []);
+  }, [addItem]);
 
   const handleShowDetails = useCallback((product: ProductDetail) => {
     setSelectedProduct(product);
@@ -42,45 +36,21 @@ const Index = () => {
 
   const handleAddToCartFromDetail = useCallback(
     (product: ProductDetail) => {
-      const mapped: Product = {
+      addItem({
         id: product.id,
         name: product.name,
         price: Number(product.price ?? 0),
         image: product.image_url,
-        hoverImage: product.image_url,
-        status:
-          product.status === "inactive" || Number(product.stock ?? 0) <= 0
-            ? "sold-out"
-            : undefined,
-      };
-
-      handleAddToCart(mapped);
+      });
     },
-    [handleAddToCart]
+    [addItem]
   );
-
-  const handleUpdateQuantity = useCallback((id: string, quantity: number) => {
-    if (quantity === 0) {
-      setCartItems((prev) => prev.filter((item) => item.id !== id));
-      return;
-    }
-    setCartItems((prev) =>
-      prev.map((item) => (item.id === id ? { ...item, quantity } : item))
-    );
-  }, []);
-
-  const handleRemoveItem = useCallback((id: string) => {
-    setCartItems((prev) => prev.filter((item) => item.id !== id));
-    toast.info("Item removed from cart");
-  }, []);
-
-  const cartItemCount = cartItems.reduce((acc, item) => acc + item.quantity, 0);
 
   return (
     <div className="min-h-screen bg-background">
       <Toaster position="bottom-right" />
       <AnnouncementBar />
-      <Header cartItemCount={cartItemCount} onCartClick={() => setIsCartOpen(true)} />
+      <Header />
       <main>
         <HeroSection />
         <CategoryGrid />
@@ -90,13 +60,7 @@ const Index = () => {
         <Newsletter />
       </main>
       <Footer />
-      <CartDrawer
-        isOpen={isCartOpen}
-        onClose={() => setIsCartOpen(false)}
-        items={cartItems}
-        onUpdateQuantity={handleUpdateQuantity}
-        onRemoveItem={handleRemoveItem}
-      />
+      <CartDrawer />
       <ProductDetailModal
         open={isDetailOpen}
         product={selectedProduct}

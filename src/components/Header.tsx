@@ -1,14 +1,10 @@
 import { ShoppingBag } from "lucide-react";
 import { useState } from "react";
-import CartDrawer from "./CartDrawer";
+import { useCart } from "@/contexts/CartContext";
 
-interface HeaderProps {
-  cartItemCount: number;
-  onCartClick: () => void;
-}
-
-const Header = ({ cartItemCount, onCartClick }: HeaderProps) => {
+const Header = () => {
   const [currency, setCurrency] = useState("SOL");
+  const { cartCount, toggleCart } = useCart();
 
   return (
     <header className="sticky top-0 z-40 bg-background border-b border-border">
@@ -34,13 +30,13 @@ const Header = ({ cartItemCount, onCartClick }: HeaderProps) => {
           {/* Icons */}
           <div className="flex items-center gap-4 md:gap-6 w-32 justify-end">
             <button
-              onClick={onCartClick}
+              onClick={() => toggleCart(true)}
               className="p-1 hover:opacity-60 transition-opacity relative"
             >
               <ShoppingBag className="w-5 h-5" strokeWidth={1.5} />
-              {cartItemCount > 0 && (
+              {cartCount > 0 && (
                 <span className="absolute -top-1 -right-1 bg-foreground text-background text-[10px] font-display w-4 h-4 flex items-center justify-center">
-                  {cartItemCount}
+                  {cartCount}
                 </span>
               )}
             </button>

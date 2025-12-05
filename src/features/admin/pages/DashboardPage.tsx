@@ -12,11 +12,12 @@ import { ProductTable } from '@/features/admin/components/ProductTable';
 import type { ProductInput, ProductRecord } from '@/features/admin/components/ProductTable';
 import { ActivityFeed } from '@/features/admin/components/ActivityFeed';
 import type { ActivityItem, ActivityAction } from '@/features/admin/components/ActivityFeed';
+import { OrdersTable } from '@/features/admin/components/OrdersTable';
 import { useTheme } from '@/contexts/ThemeContext';
 import { getSupabaseClient, type Product } from '@/lib/supabase';
 import { deleteProductImage, extractPublicIdFromUrl } from '@/lib/storage';
 
- type SectionKey = 'resumen' | 'catalogo' | 'pedidos' | 'reportes' | 'ajustes';
+type SectionKey = 'resumen' | 'catalogo' | 'pedidos' | 'reportes' | 'ajustes';
 
 const SECTION_TITLES: Record<SectionKey, string> = {
   resumen: 'Panel de la joyería',
@@ -26,11 +27,7 @@ const SECTION_TITLES: Record<SectionKey, string> = {
   ajustes: 'Ajustes del equipo',
 };
 
-const SECTION_PLACEHOLDER_COPY: Record<Exclude<SectionKey, 'resumen' | 'catalogo'>, { heading: string; description: string }> = {
-  pedidos: {
-    heading: 'Seguimiento de pedidos en construcción',
-    description: 'Muy pronto podrás visualizar el estado de cada orden y resolver incidencias desde un solo lugar.',
-  },
+const SECTION_PLACEHOLDER_COPY: Record<Exclude<SectionKey, 'resumen' | 'catalogo' | 'pedidos'>, { heading: string; description: string }> = {
   reportes: {
     heading: 'Reportes avanzados en camino',
     description: 'Estamos preparando dashboards con métricas de ventas, colecciones destacadas y desempeño por canal.',
@@ -248,9 +245,9 @@ export function DashboardPage() {
       lowStockProducts: lowStock,
       lastProductAdded: lastProduct
         ? {
-            name: lastProduct.name,
-            addedAt: formatRelativeTime(lastProduct.createdAt),
-          }
+          name: lastProduct.name,
+          addedAt: formatRelativeTime(lastProduct.createdAt),
+        }
         : undefined,
     };
 
@@ -343,9 +340,9 @@ export function DashboardPage() {
     const buildPayload = (includeId: boolean) =>
       includeId && productId
         ? {
-            id: productId,
-            ...basePayload,
-          }
+          id: productId,
+          ...basePayload,
+        }
         : { ...basePayload };
 
     let { data, error: insertError } = await client
@@ -778,6 +775,8 @@ export function DashboardPage() {
         </div>
       </>
     );
+  } else if (section === 'pedidos') {
+    content = <OrdersTable />;
   } else {
     const placeholder = SECTION_PLACEHOLDER_COPY[section];
     content = <SectionPlaceholder heading={placeholder.heading} description={placeholder.description} />;

@@ -1,23 +1,22 @@
 import { X, Minus, Plus, ShoppingBag } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Product } from "./ProductCard";
+import { useCart } from "@/contexts/CartContext";
+import { useState } from "react";
+import { getSupabaseClient } from "@/lib/supabase";
+import { toast } from "sonner";
+import { useNavigate } from "react-router-dom";
 
-export interface CartItem extends Product {
-  quantity: number;
-}
-
-interface CartDrawerProps {
-  isOpen: boolean;
-  onClose: () => void;
-  items: CartItem[];
-  onUpdateQuantity: (id: string, quantity: number) => void;
-  onRemoveItem: (id: string) => void;
-}
-
-const CartDrawer = ({ isOpen, onClose, items, onUpdateQuantity, onRemoveItem }: CartDrawerProps) => {
-  const subtotal = items.reduce((acc, item) => acc + item.price * item.quantity, 0);
+const CartDrawer = () => {
+  const { items, isOpen, toggleCart, updateQuantity, removeItem, subtotal, clearCart } = useCart();
   const freeShippingThreshold = 150;
   const remainingForFreeShipping = freeShippingThreshold - subtotal;
+  const [isCheckingOut, setIsCheckingOut] = useState(false);
+  const navigate = useNavigate();
+
+  const handleCheckout = () => {
+    toggleCart(false);
+    navigate('/checkout');
+  };
 
   return (
     <AnimatePresence>
@@ -30,7 +29,7 @@ const CartDrawer = ({ isOpen, onClose, items, onUpdateQuantity, onRemoveItem }: 
             exit={{ opacity: 0 }}
             transition={{ duration: 0.3 }}
             className="fixed inset-0 bg-foreground/50 z-50"
-            onClick={onClose}
+            onClick={() => toggleCart(false)}
           />
 
           {/* Drawer */}
@@ -44,7 +43,7 @@ const CartDrawer = ({ isOpen, onClose, items, onUpdateQuantity, onRemoveItem }: 
             {/* Header */}
             <div className="flex items-center justify-between p-4 md:p-6 border-b border-border">
               <h2 className="text-lg font-display tracking-wider">YOUR CART ({items.length})</h2>
-              <button onClick={onClose} className="p-1 hover:opacity-60 transition-opacity">
+              <button onClick={() => toggleCart(false)} className="p-1 hover:opacity-60 transition-opacity">
                 <X className="w-5 h-5" strokeWidth={1.5} />
               </button>
             </div>
@@ -73,7 +72,7 @@ const CartDrawer = ({ isOpen, onClose, items, onUpdateQuantity, onRemoveItem }: 
                   <p className="mt-2 text-sm font-body text-muted-foreground">
                     Add some pieces to get started
                   </p>
-                  <button onClick={onClose} className="mt-6 btn-primary">
+                  <button onClick={() => toggleCart(false)} className="mt-6 btn-primary">
                     Continue Shopping
                   </button>
                 </div>
@@ -96,21 +95,21 @@ const CartDrawer = ({ isOpen, onClose, items, onUpdateQuantity, onRemoveItem }: 
                         <div className="flex items-center justify-between">
                           <div className="flex items-center border border-border">
                             <button
-                              onClick={() => onUpdateQuantity(item.id, Math.max(0, item.quantity - 1))}
+                              onClick={() => updateQuantity(item.id, Math.max(0, item.quantity - 1))}
                               className="p-2 hover:bg-card transition-colors"
                             >
                               <Minus className="w-3 h-3" />
                             </button>
                             <span className="px-4 text-sm font-body">{item.quantity}</span>
                             <button
-                              onClick={() => onUpdateQuantity(item.id, item.quantity + 1)}
+                              onClick={() => updateQuantity(item.id, item.quantity + 1)}
                               className="p-2 hover:bg-card transition-colors"
                             >
                               <Plus className="w-3 h-3" />
                             </button>
                           </div>
                           <button
-                            onClick={() => onRemoveItem(item.id)}
+                            onClick={() => removeItem(item.id)}
                             className="text-xs font-display tracking-wider text-muted-foreground hover:text-foreground transition-colors"
                           >
                             REMOVE
@@ -133,10 +132,14 @@ const CartDrawer = ({ isOpen, onClose, items, onUpdateQuantity, onRemoveItem }: 
                 <p className="text-xs font-body text-muted-foreground text-center">
                   Shipping and taxes calculated at checkout
                 </p>
-                <button className="w-full btn-primary">
-                  Checkout
+                <button
+                  className="w-full btn-primary"
+                  onClick={handleCheckout}
+                  disabled={isCheckingOut}
+                >
+                  {isCheckingOut ? "Processing..." : "Checkout"}
                 </button>
-                <button onClick={onClose} className="w-full btn-ghost text-center block">
+                <button onClick={() => toggleCart(false)} className="w-full btn-ghost text-center block">
                   Continue Shopping
                 </button>
               </div>
