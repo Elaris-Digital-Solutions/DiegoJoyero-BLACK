@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import { Plus } from "lucide-react";
+import type { ProductDetail } from "./ProductDetailModal";
 
 export interface Product {
   id: string;
@@ -9,15 +10,17 @@ export interface Product {
   image: string;
   hoverImage?: string;
   status?: "sold-out" | "sale" | "new";
+  detail?: ProductDetail;
 }
 
 interface ProductCardProps {
   product: Product;
   onAddToCart: (product: Product) => void;
   index?: number;
+  onShowDetails?: (product: ProductDetail) => void;
 }
 
-const ProductCard = ({ product, onAddToCart, index = 0 }: ProductCardProps) => {
+const ProductCard = ({ product, onAddToCart, onShowDetails, index = 0 }: ProductCardProps) => {
   const isSoldOut = product.status === "sold-out";
   const isOnSale = product.status === "sale" && product.originalPrice;
 
@@ -28,6 +31,15 @@ const ProductCard = ({ product, onAddToCart, index = 0 }: ProductCardProps) => {
       viewport={{ once: true }}
       transition={{ duration: 0.5, delay: index * 0.1 }}
       className="product-card group"
+      role="button"
+      tabIndex={0}
+      onClick={() => product.detail && onShowDetails?.(product.detail)}
+      onKeyDown={(event) => {
+        if ((event.key === "Enter" || event.key === " ") && product.detail) {
+          event.preventDefault();
+          onShowDetails?.(product.detail);
+        }
+      }}
     >
       {/* Image Container */}
       <div className="relative aspect-square overflow-hidden bg-card">
@@ -70,6 +82,7 @@ const ProductCard = ({ product, onAddToCart, index = 0 }: ProductCardProps) => {
           <button
             onClick={(e) => {
               e.preventDefault();
+              e.stopPropagation();
               onAddToCart(product);
             }}
             className="absolute bottom-4 left-4 right-4 bg-foreground text-background py-3 font-display uppercase text-xs tracking-[0.15em]

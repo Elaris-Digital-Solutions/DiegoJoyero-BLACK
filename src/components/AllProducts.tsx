@@ -3,9 +3,11 @@ import { motion } from "framer-motion";
 import ProductCard, { Product as CardProduct } from "./ProductCard";
 import { fetchLandingProducts } from "@/lib/catalog";
 import type { Product as SupabaseProduct } from "@/lib/supabase";
+import type { ProductDetail } from "./ProductDetailModal";
 
 interface AllProductsProps {
   onAddToCart: (product: CardProduct) => void;
+  onShowDetails: (product: ProductDetail) => void;
 }
 
 const mapToCardProduct = (product: SupabaseProduct): CardProduct => ({
@@ -15,9 +17,10 @@ const mapToCardProduct = (product: SupabaseProduct): CardProduct => ({
   image: product.image_url,
   hoverImage: product.image_url,
   status: undefined,
+  detail: product,
 });
 
-const AllProducts = ({ onAddToCart }: AllProductsProps) => {
+const AllProducts = ({ onAddToCart, onShowDetails }: AllProductsProps) => {
   const [products, setProducts] = useState<CardProduct[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -89,6 +92,7 @@ const AllProducts = ({ onAddToCart }: AllProductsProps) => {
               key={product.id}
               product={product}
               onAddToCart={onAddToCart}
+              onShowDetails={onShowDetails}
               index={index}
             />
           ))}

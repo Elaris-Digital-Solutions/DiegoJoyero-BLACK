@@ -12,10 +12,13 @@ import Newsletter from "@/components/Newsletter";
 import Footer from "@/components/Footer";
 import CartDrawer, { CartItem } from "@/components/CartDrawer";
 import { Product } from "@/components/ProductCard";
+import ProductDetailModal, { ProductDetail } from "@/components/ProductDetailModal";
 
 const Index = () => {
   const [cartItems, setCartItems] = useState<CartItem[]>([]);
   const [isCartOpen, setIsCartOpen] = useState(false);
+  const [selectedProduct, setSelectedProduct] = useState<ProductDetail | null>(null);
+  const [isDetailOpen, setIsDetailOpen] = useState(false);
 
   const handleAddToCart = useCallback((product: Product) => {
     setCartItems((prev) => {
@@ -31,6 +34,30 @@ const Index = () => {
     });
     setIsCartOpen(true);
   }, []);
+
+  const handleShowDetails = useCallback((product: ProductDetail) => {
+    setSelectedProduct(product);
+    setIsDetailOpen(true);
+  }, []);
+
+  const handleAddToCartFromDetail = useCallback(
+    (product: ProductDetail) => {
+      const mapped: Product = {
+        id: product.id,
+        name: product.name,
+        price: Number(product.price ?? 0),
+        image: product.image_url,
+        hoverImage: product.image_url,
+        status:
+          product.status === "inactive" || Number(product.stock ?? 0) <= 0
+            ? "sold-out"
+            : undefined,
+      };
+
+      handleAddToCart(mapped);
+    },
+    [handleAddToCart]
+  );
 
   const handleUpdateQuantity = useCallback((id: string, quantity: number) => {
     if (quantity === 0) {
@@ -57,9 +84,9 @@ const Index = () => {
       <main>
         <HeroSection />
         <CategoryGrid />
-        <FeaturedProducts onAddToCart={handleAddToCart} />
+        <FeaturedProducts onAddToCart={handleAddToCart} onShowDetails={handleShowDetails} />
         <PromoBanner />
-        <AllProducts onAddToCart={handleAddToCart} />
+        <AllProducts onAddToCart={handleAddToCart} onShowDetails={handleShowDetails} />
         <Newsletter />
       </main>
       <Footer />
@@ -69,6 +96,12 @@ const Index = () => {
         items={cartItems}
         onUpdateQuantity={handleUpdateQuantity}
         onRemoveItem={handleRemoveItem}
+      />
+      <ProductDetailModal
+        open={isDetailOpen}
+        product={selectedProduct}
+        onClose={() => setIsDetailOpen(false)}
+        onAddToCart={handleAddToCartFromDetail}
       />
     </div>
   );
