@@ -1,45 +1,54 @@
+import { useEffect, useMemo, useState } from "react";
 import { motion } from "framer-motion";
-import ProductCard, { Product } from "./ProductCard";
-
-const featuredProducts: Product[] = [
-  {
-    id: "1",
-    name: "Omega Ring",
-    price: 89,
-    image: "https://images.unsplash.com/photo-1603561591411-07134e71a2a9?w=600&q=80",
-    hoverImage: "https://images.unsplash.com/photo-1605100804763-247f67b3557e?w=600&q=80",
-    status: "new",
-  },
-  {
-    id: "2",
-    name: "San Ti Bracelet",
-    price: 129,
-    originalPrice: 159,
-    image: "https://images.unsplash.com/photo-1611652022419-a9419f74343d?w=600&q=80",
-    hoverImage: "https://images.unsplash.com/photo-1573408301185-9146fe634ad0?w=600&q=80",
-    status: "sale",
-  },
-  {
-    id: "3",
-    name: "Centauri Chain",
-    price: 199,
-    image: "https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?w=600&q=80",
-    hoverImage: "https://images.unsplash.com/photo-1602751584552-8ba73aad10e1?w=600&q=80",
-  },
-  {
-    id: "4",
-    name: "Lycos Pendant",
-    price: 149,
-    image: "https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?w=600&q=80",
-    status: "sold-out",
-  },
-];
+import ProductCard, { Product as CardProduct } from "./ProductCard";
+import { fetchLandingProducts } from "@/lib/catalog";
+import type { Product as SupabaseProduct } from "@/lib/supabase";
 
 interface FeaturedProductsProps {
-  onAddToCart: (product: Product) => void;
+  onAddToCart: (product: CardProduct) => void;
 }
 
+const mapToCardProduct = (product: SupabaseProduct): CardProduct => ({
+  id: product.id,
+  name: product.name,
+  price: Number(product.price ?? 0),
+  image: product.image_url,
+  hoverImage: product.image_url,
+  status: undefined,
+});
+
 const FeaturedProducts = ({ onAddToCart }: FeaturedProductsProps) => {
+  const [products, setProducts] = useState<CardProduct[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    let isMounted = true;
+    setLoading(true);
+    setError(null);
+
+    fetchLandingProducts({ featuredOnly: true })
+      .then((items) => {
+        if (!isMounted) return;
+        setProducts(items.map(mapToCardProduct));
+      })
+      .catch((fetchError) => {
+        console.error("No se pudieron cargar los featured", fetchError);
+        if (!isMounted) return;
+        setError("No se pudieron cargar los productos destacados.");
+        setProducts([]);
+      })
+      .finally(() => {
+        if (isMounted) setLoading(false);
+      });
+
+    return () => {
+      isMounted = false;
+    };
+  }, []);
+
+  const hasProducts = useMemo(() => products.length > 0, [products]);
+
   return (
     <section id="products" className="py-16 md:py-24 bg-card">
       <div className="container mx-auto px-4 md:px-8">
@@ -66,8 +75,14 @@ const FeaturedProducts = ({ onAddToCart }: FeaturedProductsProps) => {
           </a>
         </motion.div>
 
+        {error ? (
+          <div className="rounded-lg border border-destructive/40 bg-destructive/5 px-4 py-3 text-sm text-destructive">
+            {error}
+          </div>
+        ) : null}
+
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
-          {featuredProducts.map((product, index) => (
+          {products.map((product, index) => (
             <ProductCard
               key={product.id}
               product={product}
@@ -75,6 +90,11 @@ const FeaturedProducts = ({ onAddToCart }: FeaturedProductsProps) => {
               index={index}
             />
           ))}
+          {(!loading && !error && !hasProducts) ? (
+            <div className="col-span-2 md:col-span-4 rounded-lg border border-border/60 bg-background/50 px-4 py-6 text-center text-sm text-muted-foreground">
+              No hay piezas destacadas disponibles ahora.
+            </div>
+          ) : null}
         </div>
       </div>
     </section>

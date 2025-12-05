@@ -1,72 +1,54 @@
+import { useEffect, useMemo, useState } from "react";
 import { motion } from "framer-motion";
-import ProductCard, { Product } from "./ProductCard";
-
-const allProducts: Product[] = [
-  {
-    id: "5",
-    name: "Nexus Band",
-    price: 79,
-    image: "https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?w=600&q=80",
-    hoverImage: "https://images.unsplash.com/photo-1611652022419-a9419f74343d?w=600&q=80",
-  },
-  {
-    id: "6",
-    name: "Helios Cuff",
-    price: 159,
-    originalPrice: 199,
-    image: "https://images.unsplash.com/photo-1573408301185-9146fe634ad0?w=600&q=80",
-    status: "sale",
-  },
-  {
-    id: "7",
-    name: "Atlas Ring",
-    price: 99,
-    image: "https://images.unsplash.com/photo-1605100804763-247f67b3557e?w=600&q=80",
-    hoverImage: "https://images.unsplash.com/photo-1603561591411-07134e71a2a9?w=600&q=80",
-    status: "new",
-  },
-  {
-    id: "8",
-    name: "Orion Chain",
-    price: 189,
-    image: "https://images.unsplash.com/photo-1602751584552-8ba73aad10e1?w=600&q=80",
-  },
-  {
-    id: "9",
-    name: "Titan Signet",
-    price: 139,
-    image: "https://images.unsplash.com/photo-1630019852942-f89202989a59?w=600&q=80",
-    status: "sold-out",
-  },
-  {
-    id: "10",
-    name: "Nova Pendant",
-    price: 119,
-    image: "https://images.unsplash.com/photo-1599459183200-59c3a0e3c9e3?w=600&q=80",
-    hoverImage: "https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?w=600&q=80",
-  },
-  {
-    id: "11",
-    name: "Eclipse Hoops",
-    price: 89,
-    originalPrice: 109,
-    image: "https://images.unsplash.com/photo-1535632787350-4e68ef0ac584?w=600&q=80",
-    status: "sale",
-  },
-  {
-    id: "12",
-    name: "Vega Link",
-    price: 169,
-    image: "https://images.unsplash.com/photo-1611085583191-a3b181a88401?w=600&q=80",
-    hoverImage: "https://images.unsplash.com/photo-1573408301185-9146fe634ad0?w=600&q=80",
-  },
-];
+import ProductCard, { Product as CardProduct } from "./ProductCard";
+import { fetchLandingProducts } from "@/lib/catalog";
+import type { Product as SupabaseProduct } from "@/lib/supabase";
 
 interface AllProductsProps {
-  onAddToCart: (product: Product) => void;
+  onAddToCart: (product: CardProduct) => void;
 }
 
+const mapToCardProduct = (product: SupabaseProduct): CardProduct => ({
+  id: product.id,
+  name: product.name,
+  price: Number(product.price ?? 0),
+  image: product.image_url,
+  hoverImage: product.image_url,
+  status: undefined,
+});
+
 const AllProducts = ({ onAddToCart }: AllProductsProps) => {
+  const [products, setProducts] = useState<CardProduct[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    let isMounted = true;
+    setLoading(true);
+    setError(null);
+
+    fetchLandingProducts({ featuredOnly: false })
+      .then((items) => {
+        if (!isMounted) return;
+        setProducts(items.map(mapToCardProduct));
+      })
+      .catch((fetchError) => {
+        console.error("No se pudo cargar el catálogo", fetchError);
+        if (!isMounted) return;
+        setError("No se pudo cargar el catálogo. Intenta más tarde.");
+        setProducts([]);
+      })
+      .finally(() => {
+        if (isMounted) setLoading(false);
+      });
+
+    return () => {
+      isMounted = false;
+    };
+  }, []);
+
+  const productCount = useMemo(() => products.length, [products]);
+
   return (
     <section id="all-products" className="py-16 md:py-24 bg-background">
       <div className="container mx-auto px-4 md:px-8">
@@ -82,7 +64,7 @@ const AllProducts = ({ onAddToCart }: AllProductsProps) => {
               ALL PIECES
             </h3>
             <p className="mt-2 text-sm text-muted-foreground font-body">
-              {allProducts.length} products
+              {loading ? "Loading…" : `${productCount} products`}
             </p>
           </div>
           <div className="mt-4 md:mt-0 flex items-center gap-4">
@@ -95,8 +77,14 @@ const AllProducts = ({ onAddToCart }: AllProductsProps) => {
           </div>
         </motion.div>
 
+        {error ? (
+          <div className="rounded-lg border border-destructive/40 bg-destructive/5 px-4 py-3 text-sm text-destructive">
+            {error}
+          </div>
+        ) : null}
+
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
-          {allProducts.map((product, index) => (
+          {products.map((product, index) => (
             <ProductCard
               key={product.id}
               product={product}
@@ -104,6 +92,11 @@ const AllProducts = ({ onAddToCart }: AllProductsProps) => {
               index={index}
             />
           ))}
+          {(!loading && products.length === 0 && !error) ? (
+            <div className="col-span-2 md:col-span-4 rounded-lg border border-border/60 bg-card/50 px-4 py-6 text-center text-sm text-muted-foreground">
+              No hay productos disponibles en este momento.
+            </div>
+          ) : null}
         </div>
 
         <motion.div
@@ -113,7 +106,7 @@ const AllProducts = ({ onAddToCart }: AllProductsProps) => {
           transition={{ duration: 0.6, delay: 0.4 }}
           className="mt-12 text-center"
         >
-          <button className="btn-outline">
+          <button className="btn-outline" disabled>
             Load More
           </button>
         </motion.div>
