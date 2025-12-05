@@ -17,8 +17,71 @@ dist-ssr
 !.vscode/extensions.json
 .idea
 .DS_Store
-*.suo
-*.ntvs*
-*.njsproj
-*.sln
-*.sw?
+# Node
+node_modules/
+
+# Vite/dev caches
+.vite/
+.cache/
+dist/
+build/
+out/
+public/build/
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+*.log
+
+# Runtime env files (keep examples)
+.env
+.env.*
+!.env.example
+
+# Netlify local config
+.netlify/
+
+# IDEs and editors
+.vscode/
+.idea/
+*.sublime-workspace
+*.sublime-project
+
+# macOS / Windows
+.DS_Store
+Thumbs.db
+
+# TypeScript build info
+*.tsbuildinfo
+
+# Coverage
+coverage/
+*.lcov
+
+# Credentials / Keys
+*.pem
+*.key
+*.crt
+credentials.json
+
+# Misc
+.sass-cache/
+.tmp/
+
+# OS generated files
+ehthumbs.db
+
+# Ignore local secrets for supabase or cloud services
+.supabase/
+
+# Lockfiles - keep package-lock/bun.lockb if you manage them intentionally
+# (don't ignore package-lock.json if you commit it intentionally)
+
+# Ignore generated environment overrides
+.env.local
+.env.*.local
+.env.*.secret
+
+# End
