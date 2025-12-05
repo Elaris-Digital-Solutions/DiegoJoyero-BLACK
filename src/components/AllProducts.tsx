@@ -86,7 +86,7 @@ const AllProducts = ({ onAddToCart }: AllProductsProps) => {
             </p>
           </div>
           <div className="mt-4 md:mt-0 flex items-center gap-4">
-            <select className="bg-transparent text-xs font-display uppercase tracking-wider cursor-pointer focus:outline-none border-b border-foreground pb-1 text-black" style={{ color: '#000' }}>
+            <select className="bg-transparent text-xs font-display uppercase tracking-wider cursor-pointer focus:outline-none border-b border-foreground pb-1 text-white" style={{ color: '#FFF' }}>
               <option style={{ color: "#000" }}>Sort by: Featured</option>
               <option style={{ color: "#000" }}>Price: Low to High</option>
               <option style={{ color: "#000" }}>Price: High to Low</option>
