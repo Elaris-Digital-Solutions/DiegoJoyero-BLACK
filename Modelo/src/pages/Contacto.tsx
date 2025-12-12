@@ -97,7 +97,7 @@ export function ContactoPage() {
               <p className="text-xs uppercase tracking-[0.35em] text-muted-foreground">Información directa</p>
               <div className="mt-6 space-y-4 text-sm font-light leading-relaxed text-muted-foreground">
                 <p className="flex items-center gap-3 uppercase tracking-[0.35em]">
-                  <Mail className="h-4 w-4" /> atelier@diegojoyero.com
+                  <Mail className="h-4 w-4" /> atelier@diegoartesano.com
                 </p>
                 <p className="flex items-center gap-3 uppercase tracking-[0.35em]">
                   <Phone className="h-4 w-4" /> +51 1 2345 6789
@@ -106,7 +106,7 @@ export function ContactoPage() {
                   <MapPin className="h-4 w-4" /> Atelier · Lima, Perú
                 </p>
                 <p className="flex items-center gap-3 uppercase tracking-[0.35em]">
-                  <Instagram className="h-4 w-4" /> @diegojoyero
+                  <Instagram className="h-4 w-4" /> @diegoartesano
                 </p>
                 <p className="flex items-center gap-3 uppercase tracking-[0.35em]">
                   <Clock className="h-4 w-4" /> Lunes a viernes · 10:00 – 19:00

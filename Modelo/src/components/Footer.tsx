@@ -8,15 +8,15 @@ const contactDetails = [
 
   {
     label: 'Trabaja con nosotros',
-    value: 'partnersdiegojoyero@gmail.com',
+    value: 'partnersdiegoartesano@gmail.com',
     icon: Mail,
-    href: 'mailto:partnersdiegojoyero@gmail.com',
+    href: 'mailto:partnersdiegoartesano@gmail.com',
   },
   {
     label: 'Dudas / Reclamos',
-    value: 'clientesdiegojoyero@gmail.com',
+    value: 'clientesdiegoartesano@gmail.com',
     icon: Mail,
-    href: 'mailto:clientesdiegojoyero@gmail.com',
+    href: 'mailto:clientesdiegoartesano@gmail.com',
   },
 ];
 
