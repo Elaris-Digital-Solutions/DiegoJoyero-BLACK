@@ -7,7 +7,7 @@ const Footer = () => {
         <div className="grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-12">
           {/* Brand */}
           <div className="col-span-2 md:col-span-1">
-            <img src="/logo.png" alt="Diego Joyero" className="h-8 object-contain" />
+            <img src="/logo.png" alt="Alex Artesano" className="h-8 object-contain" />
             <p className="mt-4 text-sm font-body text-muted-foreground leading-relaxed">
               Industrial jewelry for the modern individual. Crafted with intention.
             </p>
@@ -89,16 +89,16 @@ const Footer = () => {
                 <span className="uppercase font-display text-xs tracking-[0.15em] text-foreground block mb-1">
                   Trabaja con nosotros:
                 </span>
-                <a href="mailto:partnersdiegoartesano@gmail.com" className="hover:text-foreground transition-colors">
-                  partnersdiegoartesano@gmail.com
+                <a href="mailto:partnersalexartesano@gmail.com" className="hover:text-foreground transition-colors">
+                  partnersalexartesano@gmail.com
                 </a>
               </li>
               <li className="text-sm font-body text-muted-foreground">
                 <span className="uppercase font-display text-xs tracking-[0.15em] text-foreground block mb-1">
                   Dudas / reclamos:
                 </span>
-                <a href="mailto:clientesdiegoartesano@gmail.com" className="hover:text-foreground transition-colors">
-                  clientesdiegoartesano@gmail.com
+                <a href="mailto:clientesalexartesano@gmail.com" className="hover:text-foreground transition-colors">
+                  clientesalexartesano@gmail.com
                 </a>
               </li>
             </ul>
@@ -108,7 +108,7 @@ const Footer = () => {
         {/* Bottom */}
         <div className="mt-12 pt-8 border-t border-border flex flex-col md:flex-row md:items-center md:justify-between gap-4">
           <p className="text-xs font-body text-muted-foreground">
-            © 2024 Diego Joyero. All rights reserved. {" "}
+            © 2024 Alex Artesano. All rights reserved. {" "}
             <a
               href="https://www.instagram.com/elarisdigitalsolutions/"
               target="_blank"
