@@ -4,8 +4,6 @@ import { toast } from "sonner";
 import AnnouncementBar from "@/components/AnnouncementBar";
 import Header from "@/components/Header";
 import HeroSection from "@/components/HeroSection";
-import CategoryGrid from "@/components/CategoryGrid";
-import FeaturedProducts from "@/components/FeaturedProducts";
 import PromoBanner from "@/components/PromoBanner";
 import AllProducts from "@/components/AllProducts";
 import Newsletter from "@/components/Newsletter";
@@ -53,10 +51,8 @@ const Index = () => {
       <Header />
       <main>
         <HeroSection />
-        <CategoryGrid />
-        <FeaturedProducts onAddToCart={handleAddToCart} onShowDetails={handleShowDetails} />
-        <PromoBanner />
         <AllProducts onAddToCart={handleAddToCart} onShowDetails={handleShowDetails} />
+        <PromoBanner />
         <Newsletter />
       </main>
       <Footer />
